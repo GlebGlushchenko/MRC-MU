@@ -1,0 +1,16 @@
+/* *{
+  box-sizing: border-box;
+  margin: 0;
+} */
+
+:root {
+  background-color: #f0efef;
+
+  height: 100vh;
+}
+
+.active button {
+  color: rgb(25, 118, 210);
+  background-color: rgba(25, 118, 210, 0.04);
+}
+
