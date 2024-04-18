@@ -1,12 +1,22 @@
 import React from 'react'
-import { Autocomplete, Chip, TextField } from '@mui/material'
+import { Autocomplete, Chip, TextField, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 
-export default function MultipleSelectChip() {
+type MultipleSelectChipProps = {
+  placeholder?: string
+  selectItems: string[]
+  subtitle: string
+}
+
+const MultipleSelectChip: React.FC<MultipleSelectChipProps> = ({
+  placeholder = 'Заглушка...',
+  selectItems,
+  subtitle
+}) => {
   const [selectedItems, setSelectedItems] = React.useState<string[]>([])
   const [inputValue, setInputValue] = React.useState<string>('')
 
-  const handleOnChange = (event: React.SyntheticEvent, value: string[]) => {
+  const handleOnChange = (_event: React.SyntheticEvent, value: string[]) => {
     setSelectedItems(value)
   }
 
@@ -18,26 +28,23 @@ export default function MultipleSelectChip() {
 
   return (
     <div>
+      <Typography variant="subtitle1">{subtitle}</Typography>
       <Autocomplete
         sx={{ backgroundColor: 'white', width: '100%', marginBottom: 5 }}
         disablePortal
         multiple
         value={selectedItems}
-        onChange={handleOnChange}
+        onChange={(event, value) => handleOnChange(event, value)}
         inputValue={inputValue}
-        onInputChange={(event, newInputValue) => {
+        onInputChange={(_event, newInputValue) => {
           setInputValue(newInputValue)
         }}
-        options={[
-          'Иван Иванович Иванов',
-          'Александр Александрович Александров',
-          'Гена Генадий Гена'
-        ]}
+        options={selectItems}
         renderInput={(params) => (
           <TextField
             {...params}
             InputLabelProps={{ shrink: true }}
-            placeholder={selectedItems.length > 0 ? '' : 'Выберите агента...'}
+            placeholder={selectedItems.length > 0 ? '' : placeholder}
           />
         )}
         renderTags={(value: string[], getTagProps) =>
@@ -47,7 +54,6 @@ export default function MultipleSelectChip() {
                 backgroundColor: 'white',
                 border: '1px solid rgba(0, 0, 0, 0.12)'
               }}
-              key={index}
               label={option}
               {...getTagProps({ index })}
               onDelete={() => handleDeleteItem(option)}
@@ -59,3 +65,5 @@ export default function MultipleSelectChip() {
     </div>
   )
 }
+
+export default MultipleSelectChip

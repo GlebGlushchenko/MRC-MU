@@ -8,17 +8,17 @@ import { SelectChangeEvent } from '@mui/material/Select';
 
 type propsType = {
   selectedItem: string,
-  handleChange: (event: SelectChangeEvent<string>) => void
+  handleChange: (event: SelectChangeEvent<string>) => void,
+  reportsTypesItems: string[]
 }
 
- const TypeReportSelect: React.FC<propsType> = ({selectedItem, handleChange}) => {
+ const TypeReportSelect: React.FC<propsType> = ({selectedItem, handleChange, reportsTypesItems}) => {
 
   return (
     <Box sx={{ marginBottom: '20px'}}>
-          <Typography variant="subtitle1">Выберите тип отчёта:</Typography>
+          <Typography variant="subtitle1">Тип отчёта:</Typography>
           <Select
             autoWidth={true}
-            label="Тип отчёта"
             value={selectedItem}
             onChange={(event) => handleChange(event)}
             sx={{ backgroundColor: 'white',  maxWidth: '900px', width: '100%', }}
@@ -27,9 +27,9 @@ type propsType = {
               <em style={{opacity: '0.2'}}>Выберите тип</em>
             </MenuItem>
             
-            {['В реальном времени по агенту', 'В реальном времени по навыку'].map((value) => (
+            {reportsTypesItems.map((value) => (
               <MenuItem  sx={{ maxWidth: '900px', width: '900px'}} key={value} value={value}>
-                 {`Отчёт ${value}`}
+                 {value}
                 {selectedItem === value && <CheckIcon color="primary" sx={{ marginLeft: '20px'  }} />}
                
               </MenuItem>
